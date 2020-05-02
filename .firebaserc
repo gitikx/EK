@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "mykeeper-4989d": {
+      "hosting": {
+        "EK": [
+          "mykeeper-4989d"
+        ]
+      }
+    }
+  }
+}

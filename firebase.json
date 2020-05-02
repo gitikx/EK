@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "EK",
+      "public": "dist/EK",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}
