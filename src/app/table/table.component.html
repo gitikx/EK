@@ -1,0 +1,19 @@
+<div style="width: 85vw" class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <ngx-datatable
+        class="dark"
+        [rows]="rows"
+        [loadingIndicator]="loadingIndicator"
+        [columns]="columns"
+        [columnMode]="columnMode.force"
+        [headerHeight]="40"
+        [footerHeight]="50"
+        [limit]="18"
+        rowHeight="auto"
+        [reorderable]="reorderable"
+        (activate)="console.log($event)">
+      </ngx-datatable>
+    </div>
+  </div>
+</div>

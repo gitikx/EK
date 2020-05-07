@@ -20,9 +20,14 @@
     "@angular/platform-browser": "~9.1.4",
     "@angular/platform-browser-dynamic": "~9.1.4",
     "@angular/router": "~9.1.4",
+    "@swimlane/ngx-datatable": "^17.0.0",
+    "@types/jquery": "^3.3.36",
+    "firebase": "^7.14.2",
+    "font-awesome": "^4.7.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "bootstrap": "^4.4.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.4",

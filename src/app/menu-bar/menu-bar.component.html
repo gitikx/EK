@@ -1,0 +1,22 @@
+<nav class="navbar navbar-dark bg-dark col-md-4" style="margin-left: auto; margin-right: auto; z-index: 100">
+  <a class="navbar-brand" href="#">{{currentRoute}}</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" [ngClass]="compareStrings('Home', currentRoute) ? 'active' :''" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="nav-link" routerLink="home" (click)="changeUrl('Home')">Home</a>
+      </li>
+      <li class="nav-item" [ngClass]="compareStrings('Employees', currentRoute) ? 'active' :''" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="nav-link" routerLink="employees" (click)="changeUrl('Employees')">Employees <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item" [ngClass]="compareStrings('Departments', currentRoute) ? 'active' :''" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="nav-link" routerLink="employees" (click)="changeUrl('Departments')">Departments</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()">Login out</a>
+      </li>
+    </ul>
+  </div>
+</nav>
