@@ -1,22 +1,76 @@
-<nav class="navbar navbar-dark bg-dark col-md-4" style="margin-left: auto; margin-right: auto; z-index: 100">
-  <a class="navbar-brand" href="#">{{currentRoute}}</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarText">
+<!--<nav class="navbar navbar-dark bg-dark col-md-4" style="margin-left: auto; margin-right: auto; z-index: 100">-->
+<!--  <a class="navbar-brand" href="#">{{currentRoute}}</a>-->
+<!--  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--    <span class="navbar-toggler-icon"></span>-->
+<!--  </button>-->
+<!--  <div class="collapse navbar-collapse" id="navbarText">-->
+<!--    <ul class="navbar-nav mr-auto">-->
+<!--      <li class="nav-item" [ngClass]="compareStrings('Home', currentRoute) ? 'active' :''" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--        <a class="nav-link" routerLink="home" (click)="changeUrl('Home')">Home</a>-->
+<!--      </li>-->
+<!--      <li class="nav-item" [ngClass]="compareStrings('Employees', currentRoute) ? 'active' :''" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--        <a class="nav-link" routerLink="employees" (click)="changeUrl('Employees')">Employees <span class="sr-only">(current)</span></a>-->
+<!--      </li>-->
+<!--      <li class="nav-item" [ngClass]="compareStrings('Departments', currentRoute) ? 'active' :''" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">-->
+<!--        <a class="nav-link" routerLink="departments" (click)="changeUrl('Departments')">Departments</a>-->
+<!--      </li>-->
+<!--      <li class="nav-item">-->
+<!--        <a class="nav-link" (click)="logout()">Login out</a>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </div>-->
+<!--</nav>-->
+<mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo" mdbStickyHeader>
+  <mdb-navbar-brand><a class="navbar-brand a-default" style="color: white">HRM System</a></mdb-navbar-brand>
+
+  <!-- Collapsible content -->
+  <links>
+
+    <!-- Links -->
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item" [ngClass]="compareStrings('Home', currentRoute) ? 'active' :''" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <a class="nav-link" routerLink="home" (click)="changeUrl('Home')">Home</a>
-      </li>
-      <li class="nav-item" [ngClass]="compareStrings('Employees', currentRoute) ? 'active' :''" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <a class="nav-link" routerLink="employees" (click)="changeUrl('Employees')">Employees <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item" [ngClass]="compareStrings('Departments', currentRoute) ? 'active' :''" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <a class="nav-link" routerLink="employees" (click)="changeUrl('Departments')">Departments</a>
+      <li class="nav-item active">
+        <a class="nav-link waves-light" routerLink="/employees" mdbWavesEffect>Employees</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" (click)="logout()">Login out</a>
+        <a class="nav-link waves-light" routerLink="/projects" mdbWavesEffect>Projects</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-light" routerLink="/technologies" mdbWavesEffect>Technologies</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link waves-light" routerLink="/departments" mdbWavesEffect>Departments</a>
+      </li>
+
+      <!-- Dropdown -->
+      <li class="nav-item dropdown" dropdown>
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+          Analytics<span class="caret"></span></a>
+        <div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Action</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect>Another action</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect >Something else here</a>
+          <div class="divider dropdown-divider"></div>
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Separated link</a>
+        </div>
+      </li>
+
+    </ul>
+    <!-- Links -->
+
+    <ul class="navbar-nav ml-auto nav-flex-icons">
+      <li class="nav-item">
+        <a class="nav-link">
+          <div class="btn-group" mdbDropdown>
+            <mdb-icon fas icon="user" mdbDropdownToggle></mdb-icon>
+            <div class="dropdown-menu dropdown-menu-right dropdown-primary">
+              <a class="dropdown-item" href="#">My profile(NO LINK)</a>
+              <div class="divider dropdown-divider"></div>
+              <a class="dropdown-item" (click)="logout()">Log out</a>
+            </div>
+          </div>
+        </a>
       </li>
     </ul>
-  </div>
-</nav>
+  </links>
+</mdb-navbar>
+

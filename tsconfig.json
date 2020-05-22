@@ -1,4 +1,6 @@
 {
+  "include": ["node_modules/bootstrap-4-autocomplete/dist/bootstrap-4-autocomplete.d.ts"
+  ],
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",

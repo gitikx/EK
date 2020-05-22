@@ -11,12 +11,25 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {DataService} from './common/data.service';
 import {MenuBarComponent} from './menu-bar/menu-bar.component';
 import {NgxDatatableModule} from '@swimlane/ngx-datatable';
-import { EmployeesComponent } from './employees/employees.component';
-import { TableComponent } from './table/table.component';
-import { DepartmentsComponent } from './departments/departments.component';
-import { AnalyticsComponent } from './analytics/analytics.component';
-import { EmployeeComponent } from './employee/employee.component';
+import {EmployeesComponent} from './employees/employees.component';
+import {TableComponent} from './table/table.component';
+import {DepartmentsComponent} from './departments/departments.component';
+import {AnalyticsComponent} from './analytics/analytics.component';
+import {EmployeeComponent} from './employee/employee.component';
 import {Routes} from './constants/routes';
+import {LoaderService} from './common/loader.service';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatNativeDateModule} from '@angular/material/core';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import {ProjectsComponent} from './projects/projects.component';
+import {ProjectComponent} from './project/project.component';
+import { TechnologiesComponent } from './technologies/technologies.component';
+
 
 @NgModule({
   declarations: [
@@ -28,9 +41,13 @@ import {Routes} from './constants/routes';
     TableComponent,
     DepartmentsComponent,
     AnalyticsComponent,
-    EmployeeComponent
+    EmployeeComponent,
+    ProjectsComponent,
+    ProjectComponent,
+    TechnologiesComponent
   ],
   imports: [
+    MDBBootstrapModule.forRoot(),
     AngularFireModule.initializeApp({
       apiKey: 'AIzaSyB9Ib213oPkGkOIhKpuh4AHKEzvAqyKito',
       authDomain: 'mykeeper-4989d.firebaseapp.com',
@@ -43,19 +60,29 @@ import {Routes} from './constants/routes';
     }),
     BrowserModule,
     RouterModule.forRoot([
-      {path: Routes.homePage, component: HomeComponent},
       {path: Routes.loginPage, component: AuthComponent},
-      {path: Routes.employees, component: EmployeesComponent},
-      {path: 'table', component: TableComponent},
-      {path: Routes.departments, component: DepartmentsComponent}
+      {path: Routes.employees, component: EmployeesComponent, canActivate: [AuthService]},
+      {path: Routes.departments, component: DepartmentsComponent, canActivate: [AuthService]},
+      {path: Routes.employees + '/:id', component: EmployeeComponent, canActivate: [AuthService]},
+      {path: Routes.projects, component: ProjectsComponent, canActivate: [AuthService]},
+      {path: Routes.projects + '/:id', component: ProjectComponent, canActivate: [AuthService]},
+      {path: Routes.technologies, component: TechnologiesComponent, canActivate: [AuthService]},
     ]),
     ReactiveFormsModule,
     FormsModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    NoopAnimationsModule,
+    MatSnackBarModule,
+    MatProgressBarModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    AutocompleteLibModule
   ],
   providers: [
     AuthService,
-    DataService
+    DataService,
+    LoaderService
   ],
   bootstrap: [AppComponent]
 })

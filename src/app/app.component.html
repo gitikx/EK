@@ -1,6 +1,6 @@
-<app-menu-bar *ngIf="authService.isAuthorized() | async" style="color: white; position: absolute !important; top: 0;" class="col-md-12"></app-menu-bar>
+<app-menu-bar *ngIf="authService.isAuthorized() | async"></app-menu-bar>
 <div
-  style="top: 0; left: 0; color: white; margin-top: 90px; display: flex; justify-content: center; width: 100vw;">
+  style="top: 0; left: 0; color: white; display: flex; justify-content: center; width: 100vw; min-height: calc(100vh - 70px)">
   <router-outlet></router-outlet>
 </div>
 <div class="footer text-center text-light">
@@ -13,4 +13,7 @@
   <div>
     Защищено авторскими правами
   </div>
+</div>
+<div style="position: absolute; display: flex; justify-content: center; align-items: center; top: 0; left: 0; width: 100vw; height: 100vh;" id="loader">
+  <div class="loader">Loading...</div>
 </div>

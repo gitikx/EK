@@ -1,0 +1,129 @@
+<div class="container" style="margin-top: 70px; background-color: #023436; padding: 10px; width: 60vw;">
+  <div class="card-header" style="font-size: 20px">Summary information<button class="fixed-save" type="button" mdbBtn color="success" mdbWavesEffect (click)="save()">Save</button></div>
+
+  <div class="md-form input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text md-addon text-white">Project name</span>
+    </div>
+    <input type="text" aria-label="First name" class="form-control text-white" placeholder="Type your name"
+           [(ngModel)]="project.name">
+  </div>
+
+  <div class="row">
+    <mdb-checkbox class="col-md-3" [default]="true"
+                  style="margin-top: 5px; margin-left: 10px"
+                  [(ngModel)]="project.isEnded">Is project ended?
+    </mdb-checkbox>
+
+    <div class="md-form input-group col-md-4" style="margin-top: -5px">
+      <div class="input-group-prepend">
+        <span class="input-group-text md-addon text-white">Start date</span>
+      </div>
+      <input type="text" aria-label="First name" class="form-control text-white" placeholder="Type your name"
+             [(ngModel)]="project.startDate">
+    </div>
+
+    <div class="md-form input-group col-md-4" style="margin-top: -5px">
+      <div class="input-group-prepend">
+        <span class="input-group-text md-addon text-white">PM</span>
+      </div>
+      <select class="browser-default custom-select" [(ngModel)]="project.pm">
+        <option *ngFor="let employee of employeesInProject" [ngValue]="employee.key">{{employee.name + ' ' + employee.surname}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card-header mb-3" style="font-size: 20px">Employee on project</div>
+  <div class="md-form input-group mt-0 mb-3  d-flex" style="align-items: center">
+    <div class="ng-autocomplete row" style="width: 500px">
+      <ng-autocomplete
+        class="col-md-6"
+        [data]="allEmployee"
+        [searchKeyword]="'name'"
+        (selected)='selectEvent($event)'
+        (inputChanged)='onChangeSearch($event)'
+        (inputFocused)='onFocused($event)'
+        [itemTemplate]="itemTemplate"
+        [notFoundTemplate]="notFoundTemplate"
+        [(ngModel)]="inputedEmployee">
+      </ng-autocomplete>
+
+      <ng-template #itemTemplate let-item>
+        <a [innerHTML]="item.name"></a>
+      </ng-template>
+
+      <ng-template style="color: black" #notFoundTemplate let-notFound>
+        <div [innerHTML]="notFound"></div>
+      </ng-template>
+
+      <button class="col-md-5" style="margin-top: -3px" type="button" mdbBtn color="primary" mdbWavesEffect (click)="addEmployee()">Add employee</button>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="employeesInProject.length">
+    <div class="col-md-12">
+      <ngx-datatable
+        class="dark"
+        [rows]="employeesInProject"
+        [columnMode]="columnMode.force"
+        [headerHeight]="40"
+        [footerHeight]="50"
+        [limit]="18"
+        rowHeight="auto"
+        [reorderable]="reorderable">
+        <ngx-datatable-column name="Name">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span
+              title="Double click to edit"
+              (dblclick)="editing[rowIndex + '-name'] = true"
+              *ngIf="!editing[rowIndex + '-name']"
+            >
+              {{ value }}
+            </span>
+            <input
+              autofocus
+              (blur)="updateValue($event, 'name', rowIndex)"
+              *ngIf="editing[rowIndex + '-name']"
+              type="text"
+              [value]="value"
+            />
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Surname">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+                <span
+                  title="Double click to edit"
+                  (dblclick)="editing[rowIndex + '-name'] = true"
+                  *ngIf="!editing[rowIndex + '-name']"
+                >
+              {{ value }}
+            </span>
+            <input
+              autofocus
+              (blur)="updateValue($event, 'name', rowIndex)"
+              *ngIf="editing[rowIndex + '-name']"
+              type="text"
+              [value]="value"
+            />
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <button class="btn-sm" type="button" mdbBtn color="danger" mdbWavesEffect
+                    (click)="deleteEmployee(rowIndex)">Remove
+            </button>
+          </ng-template>
+        </ngx-datatable-column>
+
+      </ngx-datatable>
+    </div>
+  </div>
+
+  <div class="md-form">
+    <textarea type="text" [(ngModel)]="project.description" id="form7" class="md-textarea md-textarea-auto form-control text-white" mdbInput></textarea>
+    <label for="form7">Description</label>
+  </div>
+
+
+</div>

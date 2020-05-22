@@ -6,7 +6,7 @@
           class="dark material expandable"
           #myTable
           [groupRowsBy]="'groupKey'"
-          [rows]="employee"
+          [rows]="technologies"
           [columnMode]="columnMode.force"
           [headerHeight]="40"
           [footerHeight]="50"
@@ -17,20 +17,20 @@
           [groupExpansionDefault]="true">
           <ngx-datatable-group-header [rowHeight]="50" #myGroupHeader (toggle)="onDetailToggle($event)">
             <ng-template let-group="group" let-expanded="expanded" ngx-datatable-group-header-template>
-              <div style="font-size: 16px !important">
+              <div style="padding-left:5px;">
                 <a
                   [class.datatable-icon-right]="!expanded"
                   [class.datatable-icon-down]="expanded"
                   title="Expand/Collapse Group"
                   (click)="toggleExpandGroup(group)"
                 >
-                  <span>Department name: {{ group.value[0].departmentName }}</span>
+                  <b>Group name: {{ group.value[0].groupName }}</b>
                 </a>
               </div>
             </ng-template>
           </ngx-datatable-group-header>
           <!-- Row Column Template -->
-          <ngx-datatable-column name="Department name" prop="" editable="true" frozenLeft="True">
+          <ngx-datatable-column name="Exp. Pay." prop="" editable="true" frozenLeft="True">
             <ng-template
               ngx-datatable-cell-template
               let-rowIndex="rowIndex"
@@ -40,19 +40,7 @@
             >
             </ng-template>
           </ngx-datatable-column>
-          <ngx-datatable-column name="Employee name" prop="name">
-            <ng-template
-              ngx-datatable-cell-template
-              let-rowIndex="rowIndex"
-              let-value="value"
-              let-row="row"
-              let-group="group"
-              let-rowHeight="rowHeight"
-            >
-              <span>{{value}}</span>
-            </ng-template>
-          </ngx-datatable-column>
-          <ngx-datatable-column name="Employee surname" prop="surname">
+          <ngx-datatable-column name="Technology name" prop="name">
             <ng-template
               ngx-datatable-cell-template
               let-rowIndex="rowIndex"

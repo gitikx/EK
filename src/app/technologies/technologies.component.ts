@@ -1,18 +1,17 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AuthService} from '../auth-component/auth.service';
-import {ColumnMode} from '@swimlane/ngx-datatable';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {LoaderService} from '../common/loader.service';
 import {Router} from '@angular/router';
+import {ColumnMode} from '@swimlane/ngx-datatable';
 import {FirelistUtils} from '../utils/firelist.utils';
 
 @Component({
-  selector: 'app-departments',
-  templateUrl: './departments.component.html',
-  styleUrls: ['./departments.component.css']
+  selector: 'app-technologies',
+  templateUrl: './technologies.component.html',
+  styleUrls: ['./technologies.component.css']
 })
-export class DepartmentsComponent implements OnInit {
-
+export class TechnologiesComponent implements OnInit {
   @ViewChild('myTable') table: any;
 
   funder = [];
@@ -86,7 +85,7 @@ export class DepartmentsComponent implements OnInit {
     },
   ];
   reorderable: any = true;
-  employee: any = [];
+  technologies: any = [];
 
   constructor(private authService: AuthService,
               private angularFireDatabase: AngularFireDatabase,
@@ -95,15 +94,15 @@ export class DepartmentsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.angularFireDatabase.database.ref('employee').once('value', (value) => {
-      this.employee = FirelistUtils.objectToArray(value.val());
+    this.angularFireDatabase.database.ref('technologies').once('value', (value) => {
+      this.technologies = FirelistUtils.objectToArray(value.val());
 
-      for (const empl of this.employee) {
-        this.angularFireDatabase.database.ref(`department/${empl.department}`).once('value', (value1) => {
-          empl.departmentName = value1.val().name;
-        });
+      for (const tech of this.technologies) {
+          this.angularFireDatabase.database.ref(`techGroup/${tech.groupKey}`).once('value', (value1) => {
+            tech.groupName = value1.val().name;
+          });
       }
-    });
+    })
   }
 
   selectEmployee($event: any) {

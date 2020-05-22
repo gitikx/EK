@@ -1,1 +1,266 @@
-<p>employee works!</p>
+<div class="container" style="margin-top: 70px; background-color: #023436; padding: 10px; width: 60vw;">
+
+  <div class="card-header" style="font-size: 20px;">Summary information<button class="fixed-save" type="button" mdbBtn color="success" mdbWavesEffect (click)="save()">Save</button></div>
+  <div class="md-form input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text md-addon text-white" c>First and last name</span>
+    </div>
+    <input type="text" aria-label="First name" class="form-control text-white" placeholder="Type your name"
+           [(ngModel)]="employee.name">
+    <input type="text" aria-label="Last name" class="form-control text-white" placeholder="Type your last name"
+           [(ngModel)]="employee.surname">
+  </div>
+
+  <div class="row">
+    <div class="md-form input-group mt-0 mb-3 d-flex justify-content-between">
+      <div class="input-group-prepend col-md-2">
+        <span class="input-group-text md-addon text-white">Salary</span>
+        <span class="input-group-text md-addon text-white">$</span>
+        <input type="text" class="form-control text-white" [(ngModel)]="employee.salary"
+               aria-label="Dollar amount (with dot and two decimal places)">
+      </div>
+      <div class="input-group-prepend col-md-2">
+        <span class="input-group-text md-addon text-white">Gender</span>
+        <select class="browser-default custom-select" [(ngModel)]="employee.gender">
+          <option ngValue="F">Female</option>
+          <option ngValue="M">Male</option>
+        </select>
+      </div>
+      <div class="input-group-prepend col-md-4">
+        <span class="input-group-text md-addon text-white">Phone number</span>
+        <input type="text" class="form-control text-white" [(ngModel)]="employee.phone">
+      </div>
+      <div class="input-group-prepend col-md-4">
+        <span class="input-group-text md-addon text-white">Birthday(31.12.1998)</span>
+        <input type="text" class="form-control text-white" [(ngModel)]="employee.birthday">
+      </div>
+    </div>
+  </div>
+
+  <div class="card-header mb-3" style="font-size: 20px">Education</div>
+  <div class="md-form input-group mt-0 mb-3  d-flex" style="justify-content: center; align-items: center">
+    <div class="input-group-prepend">
+      <span class="input-group-text md-addon text-white">Education</span>
+      <select class="browser-default custom-select" [(ngModel)]="employee.education.key">
+        <option *ngFor="let education of educations" [ngValue]="education.key">{{education.name}}</option>
+      </select>
+    </div>
+    <div>
+      <div class="input-group-prepend">
+        <span class="input-group-text md-addon text-white">Start year</span>
+        <input type="text" class="form-control text-white" [(ngModel)]="employee.education.startDate">
+      </div>
+      <div class="input-group-prepend">
+        <span class="input-group-text md-addon text-white">End year</span>
+        <input type="text" class="form-control text-white" [(ngModel)]="employee.education.endDate">
+      </div>
+    </div>
+  </div>
+
+  <div class="card-header mb-3" style="font-size: 20px">Internal information</div>
+  <div class="md-form input-group mt-0 mb-3  d-flex">
+    <div class="input-group-prepend">
+      <span class="input-group-text md-addon text-white">Department</span>
+      <select class="browser-default custom-select" [(ngModel)]="employee.department">
+        <option *ngFor="let department of departments" [ngValue]="department.key">{{department.name}}</option>
+      </select>
+    </div>
+    <div class="input-group-prepend">
+      <span class="input-group-text md-addon text-white">Position</span>
+      <select class="browser-default custom-select" [(ngModel)]="employee.position">
+        <option *ngFor="let position of positions" [ngValue]="position.key">{{position.name}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="card-header mb-3" style="font-size: 20px">Languages</div>
+  <div class="md-form input-group mt-0 mb-3  d-flex" style="align-items: center">
+    <div class="ng-autocomplete row" style="width: 500px">
+      <ng-autocomplete
+        class="col-md-6"
+        [data]="languages"
+        [searchKeyword]="'name'"
+        (selected)='selectEvent($event)'
+        (inputChanged)='onChangeSearch($event)'
+        (inputFocused)='onFocused($event)'
+        [itemTemplate]="itemTemplate"
+        [notFoundTemplate]="notFoundTemplate"
+        [(ngModel)]="inputedLanguage">
+      </ng-autocomplete>
+
+      <ng-template #itemTemplate let-item>
+        <a [innerHTML]="item.name"></a>
+      </ng-template>
+
+      <ng-template style="color: black" #notFoundTemplate let-notFound>
+        <div [innerHTML]="notFound"></div>
+      </ng-template>
+
+      <button class="col-md-5" style="margin-top: -3px" type="button" mdbBtn color="primary" mdbWavesEffect (click)="addLanguage()">Add language</button>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="employeeLanguages.length">
+    <div class="col-md-12">
+      <ngx-datatable
+        class="dark"
+        [rows]="employeeLanguages"
+        [columnMode]="columnMode.force"
+        [headerHeight]="40"
+        [footerHeight]="50"
+        [limit]="18"
+        rowHeight="auto"
+        [reorderable]="reorderable"
+        (activate)="event($event)">
+        <ngx-datatable-column name="Name">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span
+              title="Double click to edit"
+              (dblclick)="editingLanguage[rowIndex + '-name'] = true"
+              *ngIf="!editingLanguage[rowIndex + '-name']"
+            >
+              {{ value }}
+            </span>
+            <input
+              autofocus
+              (blur)="updateLanguage($event, 'name', rowIndex)"
+              *ngIf="editingLanguage[rowIndex + '-name']"
+              type="text"
+              [value]="value"
+            />
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Level">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span
+              title="Double click to edit"
+              (dblclick)="editingLanguage[rowIndex + '-level'] = true"
+              *ngIf="!editingLanguage[rowIndex + '-level']"
+            >
+              {{ value }}
+            </span>
+            <select
+              *ngIf="editingLanguage[rowIndex + '-level']"
+              (blur)="editingLanguage[rowIndex + '-level'] = false"
+              (change)="updateLanguage($event, 'level', rowIndex)"
+              [value]="value">
+              <option value="Intermediate">Intermediate</option>
+              <option value="Upper intermediate">Upper intermediate</option>
+            </select>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <button class="btn-sm" type="button" mdbBtn color="danger" mdbWavesEffect
+                    (click)="deleteLanguage(rowIndex)">Remove
+            </button>
+          </ng-template>
+        </ngx-datatable-column>
+
+      </ngx-datatable>
+    </div>
+  </div>
+
+  <div class="card-header mb-3" style="font-size: 20px">Technologies</div>
+  <div class="ng-autocomplete row" style="width: 500px">
+    <ng-autocomplete
+      class="col-md-6"
+      [data]="technologies"
+      [searchKeyword]="'name'"
+      (selected)='selectEvent($event)'
+      (inputChanged)='onChangeSearch($event)'
+      (inputFocused)='onFocused($event)'
+      [itemTemplate]="itemTemplate"
+      [notFoundTemplate]="notFoundTemplate"
+      [(ngModel)]="inputedTechnology">
+    </ng-autocomplete>
+
+    <ng-template #itemTemplate let-item>
+      <a [innerHTML]="item.name"></a>
+    </ng-template>
+
+    <ng-template #notFoundTemplate let-notFound>
+      <div [innerHTML]="notFound"></div>
+    </ng-template>
+
+    <button class="col-md-5" style="margin-top: -3px" type="button" mdbBtn color="primary" mdbWavesEffect (click)="addTechnology()">Add technology
+    </button>
+  </div>
+
+  <div class="row" *ngIf="employeeTechnologies.length">
+    <div class="col-md-12">
+      <ngx-datatable
+        class="dark"
+        [rows]="employeeTechnologies"
+        [columnMode]="columnMode.force"
+        [headerHeight]="40"
+        [footerHeight]="50"
+        [limit]="18"
+        rowHeight="auto"
+        [reorderable]="reorderable"
+        (activate)="event($event)">
+        <ngx-datatable-column name="Name">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+            <span
+              title="Double click to edit"
+              (dblclick)="editingTechnology[rowIndex + '-name'] = true"
+              *ngIf="!editingTechnology[rowIndex + '-name']"
+            >
+              {{ value }}
+            </span>
+            <input
+              autofocus
+              (blur)="updateTechnology($event, 'name', rowIndex)"
+              *ngIf="editingTechnology[rowIndex + '-name']"
+              type="text"
+              [value]="value"
+            />
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Level">
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <span
+              title="Double click to edit"
+              (dblclick)="editingTechnology[rowIndex + '-level'] = true"
+              *ngIf="!editingTechnology[rowIndex + '-level']"
+            >
+              {{ value }}
+            </span>
+            <select
+              *ngIf="editingTechnology[rowIndex + '-level']"
+              (blur)="editingTechnology[rowIndex + '-level'] = false"
+              (change)="updateTechnology($event, 'level', rowIndex)"
+              [value]="value">
+              <option value="Intermediate">Intermediate</option>
+              <option value="Upper intermediate">Upper intermediate</option>
+            </select>
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column>
+          <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value">
+            <button class="btn-sm" type="button" mdbBtn color="danger" mdbWavesEffect
+                    (click)="deleteTechnology(rowIndex)">Remove
+            </button>
+          </ng-template>
+        </ngx-datatable-column>
+
+      </ngx-datatable>
+
+    </div>
+  </div>
+  <div class="card-header mb-3" style="font-size: 20px">Projects</div>
+  <ngx-datatable
+    class="dark"
+    [rows]="employeeProjects"
+    [columns]="projectsColumns"
+    [columnMode]="columnMode.force"
+    [headerHeight]="40"
+    [footerHeight]="50"
+    [limit]="18"
+    rowHeight="auto"
+    [reorderable]="reorderable"
+    (activate)="event($event)">
+  </ngx-datatable>
+</div>

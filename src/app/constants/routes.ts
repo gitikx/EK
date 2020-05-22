@@ -1,6 +1,7 @@
 export enum Routes {
   loginPage = '',
-  homePage = 'home',
   employees = 'employees',
-  departments = 'departments'
+  departments = 'departments',
+  projects = 'projects',
+  technologies = 'technologies'
 }

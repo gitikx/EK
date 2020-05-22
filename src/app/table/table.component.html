@@ -12,7 +12,8 @@
         [limit]="18"
         rowHeight="auto"
         [reorderable]="reorderable"
-        (activate)="console.log($event)">
+        (activate)="event($event)"
+        (page)="paging($event)">
       </ngx-datatable>
     </div>
   </div>

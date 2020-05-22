@@ -3,6 +3,8 @@ import {AuthService} from '../auth-component/auth.service';
 import {Router} from '@angular/router';
 import {StringUtils} from '../utils/string.utils';
 import {Routes} from '../constants/routes';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {ToasterService} from '../common/toaster.service';
 
 @Component({
   selector: 'app-menu-bar',
@@ -16,7 +18,8 @@ export class MenuBarComponent implements OnInit {
   compareStrings = StringUtils.compareWithoutCase;
 
   constructor(public authService: AuthService,
-              private router: Router) {
+              private router: Router,
+              private toasterService: ToasterService) {
   }
 
   ngOnInit(): void {
@@ -29,6 +32,7 @@ export class MenuBarComponent implements OnInit {
 
   logout() {
     this.authService.signOut().then(() => {
+      this.toasterService.showToast('Log out success!');
       this.router.navigateByUrl(Routes.loginPage);
     });
   }
